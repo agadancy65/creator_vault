@@ -71,7 +71,7 @@
         <div class="index-main">
           <section class="card search-card" aria-labelledby="search-title">
             <h2 id="search-title">Search a handle</h2>
-            <form id="search-form" class="search-form">
+            <form id="search-form" class="search-form" data-validate novalidate>
               <label class="sr-only" for="handle-input">Creator handle</label>
               <input
                 id="handle-input"
@@ -79,7 +79,13 @@
                 type="text"
                 placeholder="@creator_handle"
                 autocomplete="off"
+                data-rules="required handle"
               />
+              <span
+                class="field-error"
+                id="handle-input-error"
+                role="alert"
+              ></span>
               <button class="button button-primary" type="submit">
                 Verify handle
               </button>
@@ -127,6 +133,7 @@
     </main>
 
     <script src="js/scoring.js"></script>
+    <script src="js/form-validation.js"></script>
     <script src="js/search.js"></script>
   </body>
 </html>
