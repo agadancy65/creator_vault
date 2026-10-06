@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="CreatorVault — creator verification and account management."
+    />
+    <meta name="theme-color" content="#0a1413" />
+    <title>Verified result — CreatorVault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../assets/icons/favicon-16x16.png"
+    />
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/theme.js"></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="../index.html"
+          ><img
+            src="../assets/icons/logo.png"
+            alt=""
+            width="24"
+            height="24"
+          />CreatorVault</a
+        >
+        <div class="topbar-actions">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Switch to light theme"
+          >
+            🌙
+          </button>
+          <a class="text-link" href="login.html">Log in</a>
+        </div>
+      </header>
+      <div class="page-content">
+        <section class="result-card verified-card">
+          <span class="result-icon">✓</span>
+          <span class="eyebrow">VERIFIED CREATOR</span>
+          <h1 class="handle-display" data-result-handle>@tobi_official</h1>
+          <p class="status-copy">
+            This handle has been verified by CreatorVault.
+          </p>
+          <div class="detail-list">
+            <div>
+              <span>Status</span><strong class="positive">Verified</strong>
+            </div>
+            <div><span>Last checked</span><strong>Recently</strong></div>
+          </div>
+        </section>
+        <a class="button button-secondary full-width" href="../index.html"
+          >Search another handle</a
+        >
+      </div>
+    </main>
+    <script src="../js/result-render.js"></script>
+    <script src="../js/navigation.js"></script>
+  </body>
+</html>

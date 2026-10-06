@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="CreatorVault helps users verify creator handles before making payments."
+    />
+    <meta name="theme-color" content="#0a1413" />
+    <title>CreatorVault — Verify Before You Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/icons/favicon-16x16.png"
+    />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html"
+          ><img
+            src="assets/icons/logo.png"
+            alt=""
+            width="24"
+            height="24"
+          />CreatorVault</a
+        >
+        <div class="topbar-actions">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Switch to light theme"
+          >
+            🌙
+          </button>
+          <a class="text-link" href="pages/login.html">Log in</a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <span class="eyebrow">CREATOR SAFETY</span>
+        <h1>Verify before<br />you pay.</h1>
+        <p>
+          Check a creator handle before sending money or trusting an account.
+        </p>
+      </section>
+
+      <div class="index-layout">
+        <div class="index-main">
+          <section class="card search-card" aria-labelledby="search-title">
+            <h2 id="search-title">Search a handle</h2>
+            <form id="search-form" class="search-form">
+              <label class="sr-only" for="handle-input">Creator handle</label>
+              <input
+                id="handle-input"
+                name="handle"
+                type="text"
+                placeholder="@creator_handle"
+                autocomplete="off"
+              />
+              <button class="button button-primary" type="submit">
+                Verify handle
+              </button>
+            </form>
+            <p class="helper-text">
+              Try
+              <button
+                class="inline-demo"
+                type="button"
+                data-demo-handle="@tobi_official"
+              >
+                @tobi_official
+              </button>
+              or
+              <button
+                class="inline-demo"
+                type="button"
+                data-demo-handle="@Tobi_0fficial_Mgmt"
+              >
+                @Tobi_0fficial_Mgmt
+              </button>
+            </p>
+          </section>
+
+          <section class="card stat-card">
+            <div>
+              <span class="stat-number">24</span>
+              <span class="stat-label">accounts flagged today</span>
+            </div>
+            <span class="status-dot"></span>
+          </section>
+        </div>
+
+        <div class="index-aside">
+          <a class="card creator-cta" href="pages/signup.html">
+            <div>
+              <span class="eyebrow">CREATORS</span>
+              <h2>Are you a creator?</h2>
+              <p>Get your handles verified and build trust.</p>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/scoring.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

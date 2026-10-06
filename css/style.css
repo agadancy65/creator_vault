@@ -1,0 +1,722 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0a1413;
+  --card: #121f1d;
+  --card-2: #162622;
+  --border: #244d44;
+  --accent: #14b394;
+  --accent-dark: #0d7361;
+  --text: #f2faf8;
+  --muted: #8ca8a1;
+  --red: #e14c4c;
+  --red-bg: #291010;
+  --green-bg: #0f2922;
+  --font: "Inter", sans-serif;
+
+  /* Fluid layout tokens. The shell is fluid and bounded rather than pinned
+     to a single width, so every tier reuses the same components. */
+  --shell-max: 430px;
+  --gutter: 20px;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --radius-xs: 12px;
+
+  /* Notch / home-indicator insets for installed (standalone) PWAs. */
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+/* Breakpoint tiers: 480 (large phone) / 700 (tablet) / 1024 (laptop) / 1280 (desktop) */
+@media (min-width: 480px) {
+  :root {
+    --shell-max: 520px;
+    --gutter: 24px;
+  }
+}
+@media (min-width: 700px) {
+  :root {
+    --shell-max: 720px;
+    --gutter: 28px;
+    --radius: 24px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --shell-max: 960px;
+    --gutter: 32px;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --shell-max: 1040px;
+    --gutter: 40px;
+  }
+}
+
+html[data-theme="light"] {
+  --bg: #f4f9f7;
+  --card: #ffffff;
+  --card-2: #eef5f2;
+  --border: #d7e4df;
+  --accent: #0d9a7e;
+  --accent-dark: #0a7c65;
+  --text: #0e1f1c;
+  --muted: #5a6e69;
+  --red: #c23b3b;
+  --red-bg: #fbeaea;
+  --green-bg: #e7f6f1;
+}
+html[data-theme="light"] body {
+  background: #eef3f1;
+}
+html[data-theme="light"] input {
+  background: #ffffff;
+}
+html[data-theme="light"] .warning-box ul {
+  color: #8a3a3a;
+}
+
+/* The app is dark by default regardless of system preference; the toggle
+   sets data-theme explicitly. color-scheme keeps UA-rendered controls
+   (scrollbars, form controls) in step with the active theme. */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: dark;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: #06100f;
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input {
+  font: inherit;
+}
+
+button,
+.button {
+  cursor: pointer;
+}
+
+/* Media never overflows its container, and reserves space via HTML
+   width/height attributes so there is no layout shift while loading. */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.page-shell {
+  width: min(100%, var(--shell-max));
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: 20px;
+  padding-left: max(var(--gutter), var(--safe-l));
+  padding-right: max(var(--gutter), var(--safe-r));
+  padding-bottom: max(20px, var(--safe-b));
+  background: var(--bg);
+
+  /* Type and spacing inside scale with this container, not the viewport, so
+     they stay correct now that the shell widens past 430px. */
+  container-type: inline-size;
+  container-name: shell;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: clamp(32px, 10cqi, 52px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-size: 1.1rem;
+}
+.brand img {
+  border-radius: 4px;
+  flex: none;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.text-link,
+.small-link {
+  color: var(--muted);
+  font-size: 0.88rem;
+  /* Grow the touch target without shifting layout. */
+  padding: 8px 4px;
+  margin: -8px -4px;
+}
+
+.hero {
+  margin-bottom: 28px;
+}
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.hero h1,
+.form-section h1,
+.result-card h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+/* Fluid display type driven by the shell's inline size, not the viewport.
+   The 12cqi term reproduces the original mobile size at 320px. */
+@supports (font-size: 1cqi) {
+  .hero h1,
+  .form-section h1,
+  .result-card h1 {
+    font-size: clamp(2.1rem, 12cqi, 3.5rem);
+  }
+}
+/* Identifiers (creator handles) get their own, smaller scale so a long
+   handle wraps between tokens instead of shattering mid-word. */
+.handle-display {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+@supports (font-size: 1cqi) {
+  .handle-display {
+    font-size: clamp(1.5rem, 8cqi, 2.25rem);
+  }
+}
+
+.hero p,
+.section-copy,
+.status-copy {
+  max-width: 35rem;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.card,
+.result-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.search-card {
+  padding: 18px;
+}
+.search-card h2,
+.card h2 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+}
+
+.search-form {
+  display: grid;
+  gap: 10px;
+}
+input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  outline: none;
+  padding: 14px;
+  color: var(--text);
+  background: #0b1816;
+}
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(20, 179, 148, 0.12);
+}
+
+.button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  padding: 0 18px;
+  font-weight: 700;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+.button-primary {
+  background: var(--accent);
+  color: #06110f;
+}
+.button-secondary {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text);
+}
+.button-danger {
+  background: var(--red);
+  color: #fff;
+}
+.full-width {
+  width: 100%;
+}
+
+.helper-text {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  overflow-wrap: anywhere;
+}
+.inline-demo {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Long, unbroken values (handles, emails) must be allowed to break, but the
+   rule belongs on the text itself — not on block containers, where it has no
+   effect on flex/grid children. */
+h1,
+h2,
+p,
+.detail-list span,
+.detail-list strong,
+.handle-row span,
+.card-heading a {
+  overflow-wrap: anywhere;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 16px 18px;
+}
+.stat-card > * {
+  min-width: 0;
+}
+.stat-number {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.stat-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+.status-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 16px rgba(20, 179, 148, 0.5);
+}
+
+.creator-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 18px;
+}
+.creator-cta > * {
+  min-width: 0;
+}
+.creator-cta h2 {
+  margin: 0 0 4px;
+}
+.creator-cta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.arrow {
+  flex: none;
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+
+.page-content {
+  padding-bottom: 30px;
+}
+
+.result-card {
+  margin-bottom: 14px;
+  padding: 22px;
+}
+.result-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  margin-bottom: 28px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.result-icon.danger {
+  background: var(--red-bg);
+  color: var(--red);
+}
+.muted-icon {
+  background: #1a2221;
+  color: var(--muted);
+}
+.positive {
+  color: var(--accent);
+}
+.danger-text {
+  color: var(--red);
+}
+
+.detail-list {
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.detail-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.detail-list > div > * {
+  min-width: 0;
+}
+.detail-list span {
+  color: var(--muted);
+}
+
+.warning-box {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--red-bg);
+}
+.warning-box h2 {
+  font-size: 0.9rem;
+}
+.warning-box ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #d6a6a6;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+/* Self-adapting rows: collapse to one column when the track is too narrow,
+   expand to as many as fit when there is room. No breakpoint required. */
+.button-row {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.button-row > * {
+  min-width: 0;
+}
+
+.form-section {
+  padding-top: 12px;
+}
+.stack-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+.stack-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.stack-form .button {
+  margin-top: 4px;
+}
+.center {
+  text-align: center;
+}
+
+.dashboard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.dashboard-head > * {
+  min-width: 0;
+}
+.dashboard-head h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+}
+.avatar {
+  flex: none;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #06110f;
+  font-weight: 800;
+}
+.dashboard-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.dashboard-grid > * {
+  min-width: 0;
+}
+.metric-card {
+  padding: 16px;
+}
+.metric-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.metric-value {
+  display: block;
+  margin-top: 5px;
+  font-size: 1.15rem;
+}
+
+.handle-list-card {
+  margin-top: 10px;
+  padding: 18px;
+}
+.card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+.card-heading > * {
+  min-width: 0;
+}
+.card-heading h2 {
+  margin: 0;
+}
+.handle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.handle-row > * {
+  min-width: 0;
+}
+.badge {
+  flex: none;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+.badge-green {
+  background: var(--green-bg);
+  color: var(--accent);
+}
+
+.login-section {
+  padding-top: clamp(36px, 10cqi, 80px);
+}
+
+/* Desktop / tablet composition. The widened shell needs real internal
+   layout, otherwise it is just a wide single column of short cards. */
+.index-layout,
+.dashboard-layout {
+  display: grid;
+  gap: 0;
+}
+/* Spacing between the stacked blocks comes from the wrapper, not from a
+   child's margin, so it survives the child's margin being reset below. */
+.dashboard-layout {
+  gap: 10px;
+}
+.dashboard-side {
+  display: grid;
+  gap: 10px;
+}
+.dashboard-side .handle-list-card {
+  margin-top: 0;
+}
+@media (min-width: 1024px) {
+  .index-layout {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 0 20px;
+    align-items: start;
+  }
+  .index-main {
+    display: grid;
+    gap: 12px;
+  }
+  .index-main .stat-card {
+    margin-top: 0;
+  }
+  .index-aside .creator-cta {
+    margin-top: 0;
+    height: 100%;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 300px 1fr;
+    gap: 0 20px;
+    align-items: start;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Pointer-only affordances, so tap targets do not stay in a hover state. */
+@media (hover: hover) {
+  .button:hover {
+    transform: translateY(-1px);
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+  }
+  .text-link:hover,
+  .small-link:hover {
+    color: var(--text);
+  }
+}
+
+/* No border-radius here: the outline already follows each element's own
+   radius, and setting one would deform round controls on focus. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.theme-toggle:focus-visible,
+.button:focus-visible {
+  outline-offset: 3px;
+}
+input:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .button {
+    transition: none;
+  }
+  .button:hover {
+    transform: none;
+  }
+}
+
+/* Raised, centred panel from tablet up. */
+@media (min-width: 700px) {
+  body {
+    padding-block: clamp(24px, 6vh, 64px);
+    padding-left: max(clamp(0px, 2vw, 24px), var(--safe-l));
+    padding-right: max(clamp(0px, 2vw, 24px), var(--safe-r));
+  }
+  .page-shell {
+    min-height: auto;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Very narrow viewports (zoomed-in landscape, split screen). */
+@media (max-width: 359px) {
+  :root {
+    --gutter: 16px;
+  }
+  .page-shell {
+    padding-top: 16px;
+  }
+  .result-card,
+  .search-card,
+  .handle-list-card {
+    padding: 16px;
+  }
+  .button {
+    padding: 0 14px;
+  }
+}

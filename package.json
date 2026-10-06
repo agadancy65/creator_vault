@@ -1,0 +1,12 @@
+{
+  "name": "creatorvault",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CreatorVault frontend prototype.",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
