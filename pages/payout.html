@@ -65,20 +65,69 @@
           <p class="section-copy">
             Connect a payout account for future CreatorVault creator features.
           </p>
-          <form class="stack-form" data-demo-submit="dashboard.html">
-            <label
-              >Account name<input type="text" required placeholder="Full name"
-            /></label>
-            <label
-              >Bank name<input type="text" required placeholder="Bank"
-            /></label>
-            <label
-              >Account number<input
+          <form
+            class="stack-form"
+            data-validate
+            novalidate
+            data-demo-submit="dashboard.html"
+          >
+            <div class="form-error-summary" role="alert" tabindex="-1"></div>
+            <label>
+              Account name
+              <input
+                id="account-name"
+                name="account-name"
+                type="text"
+                required
+                autocomplete="name"
+                placeholder="Full name"
+                data-rules="required min:2"
+                data-msg-min="Enter the name on the account."
+              />
+              <span
+                class="field-error"
+                id="account-name-error"
+                role="alert"
+              ></span>
+            </label>
+            <label>
+              Bank name
+              <input
+                id="bank-name"
+                name="bank-name"
+                type="text"
+                required
+                autocomplete="organization"
+                placeholder="Bank"
+                data-rules="required"
+              />
+              <span
+                class="field-error"
+                id="bank-name-error"
+                role="alert"
+              ></span>
+            </label>
+            <label>
+              Account number
+              <input
+                id="account-number"
+                name="account-number"
                 type="text"
                 inputmode="numeric"
                 required
-                placeholder="0000000000"
-            /></label>
+                autocomplete="off"
+                placeholder="Enter 10-digit account number"
+                data-rules="required digits min:10 max:10"
+                data-msg-digits="Account numbers contain digits only."
+                data-msg-min="Enter the full 10-digit account number."
+                data-msg-max="Account numbers are 10 digits."
+              />
+              <span
+                class="field-error"
+                id="account-number-error"
+                role="alert"
+              ></span>
+            </label>
             <button class="button button-primary" type="submit">
               Save payout account
             </button>
@@ -86,6 +135,7 @@
         </section>
       </div>
     </main>
+    <script src="../js/form-validation.js"></script>
     <script src="../js/navigation.js"></script>
   </body>
 </html>

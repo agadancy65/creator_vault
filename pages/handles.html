@@ -65,14 +65,53 @@
           <p class="section-copy">
             Add the social handles you want CreatorVault to verify.
           </p>
-          <form class="stack-form" data-demo-submit="payout.html">
-            <label
-              >Instagram<input type="text" placeholder="@yourhandle"
-            /></label>
-            <label>TikTok<input type="text" placeholder="@yourhandle" /></label>
-            <label
-              >YouTube<input type="text" placeholder="@yourchannel"
-            /></label>
+          <form
+            class="stack-form"
+            data-validate
+            novalidate
+            data-demo-submit="payout.html"
+          >
+            <div class="form-error-summary" role="alert" tabindex="-1"></div>
+            <label>
+              Instagram
+              <input
+                id="instagram"
+                name="instagram"
+                type="text"
+                autocomplete="username"
+                placeholder="@yourhandle"
+                data-rules="handle"
+              />
+              <span
+                class="field-error"
+                id="instagram-error"
+                role="alert"
+              ></span>
+            </label>
+            <label>
+              TikTok
+              <input
+                id="tiktok"
+                name="tiktok"
+                type="text"
+                autocomplete="username"
+                placeholder="@yourhandle"
+                data-rules="handle"
+              />
+              <span class="field-error" id="tiktok-error" role="alert"></span>
+            </label>
+            <label>
+              YouTube
+              <input
+                id="youtube"
+                name="youtube"
+                type="text"
+                autocomplete="username"
+                placeholder="@yourchannel"
+                data-rules="handle"
+              />
+              <span class="field-error" id="youtube-error" role="alert"></span>
+            </label>
             <button class="button button-primary" type="submit">
               Continue
             </button>
@@ -80,6 +119,7 @@
         </section>
       </div>
     </main>
+    <script src="../js/form-validation.js"></script>
     <script src="../js/navigation.js"></script>
   </body>
 </html>

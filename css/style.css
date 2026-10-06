@@ -498,6 +498,128 @@ p,
   text-align: center;
 }
 
+/* --- Form validation --- */
+
+/* Messages are empty until a rule fails, so they never
+   reserve space or shift the layout while a form is pristine. */
+.field-error {
+  display: block;
+  color: var(--red);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.field-error:empty {
+  display: none;
+}
+
+.stack-form input[aria-invalid="true"] {
+  border-color: var(--red);
+}
+.stack-form input[aria-invalid="true"]:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(225, 76, 76, 0.18);
+}
+
+/* Cosmetic: tint the label of an invalid field. Guarded so
+   browsers without :has() simply keep the default label colour. */
+@supports selector(:has(*)) {
+  .stack-form label:has(input[aria-invalid="true"]) {
+    color: var(--red);
+  }
+}
+
+.form-error-summary {
+  border: 1px solid var(--red);
+  border-radius: var(--radius-sm);
+  background: var(--red-bg);
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+.form-error-summary:empty {
+  display: none;
+}
+.form-error-summary p {
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.form-error-summary ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.form-error-summary a {
+  color: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.form-error-summary a:hover,
+.form-error-summary a:focus-visible {
+  color: var(--text);
+}
+
+/* --- Password visibility toggle --- */
+
+/* Wraps an input and its toggle so the toggle can sit
+   over the input's trailing edge. */
+.field {
+  position: relative;
+  display: block;
+}
+.field--toggle input {
+  /* Keep typed text from running under the toggle. */
+  padding-right: 68px;
+}
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  min-width: 44px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.password-toggle:hover {
+  color: var(--text);
+}
+
+/* --- Password reset confirmation --- */
+
+/* Text stays in --text on purpose: the accent colour does not
+   reach 4.5:1 on the green background in the light theme. */
+.form-success {
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--green-bg);
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+.form-success:empty {
+  display: none;
+}
+.reset-confirm {
+  padding: 22px;
+}
+.reset-confirm h2 {
+  margin: 0 0 14px;
+}
+.reset-confirm .button-row {
+  margin-top: 22px;
+}
+.reset-email {
+  overflow-wrap: anywhere;
+}
+
 .dashboard-head {
   display: flex;
   align-items: center;

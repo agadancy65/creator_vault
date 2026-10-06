@@ -1,12 +1,13 @@
 # CreatorVault
 
-CreatorVault is a  frontend prototype for checking creator handles before making payments to online vendors.
+CreatorVault is a frontend prototype for checking creator handles before making payments to online vendors.
 
 ## Project structure
 
 ```text
 creatorvault/
 ├── index.html
+├── 404.html
 ├── pages/
 │   ├── verified.html
 │   ├── flagged.html
@@ -15,20 +16,27 @@ creatorvault/
 │   ├── handles.html
 │   ├── payout.html
 │   ├── dashboard.html
-│   └── login.html
+│   ├── login.html
+│   ├── forgot-password.html
+│   └── reset-password.html
 ├── css/
 │   └── style.css
 ├── js/
+│   ├── theme.js
+│   ├── scoring.js
 │   ├── search.js
-│   └── navigation.js
+│   ├── navigation.js
+│   ├── result-render.js
+│   ├── form-validation.js
+│   ├── password-toggle.js
+│   ├── forgot-password.js
+│   ├── reset-password.js
+│   └── login.js
 ├── assets/
 │   ├── icons/
 │   └── images/
-├── .editorconfig
-├── .gitignore
-├── .nvmrc
-├── .prettierrc
 ├── package.json
+├── package-lock.json
 ├── LICENSE
 ├── robots.txt
 ├── site.webmanifest
@@ -64,6 +72,16 @@ The creator flow is:
 `Signup → Link Handles → Payout → Dashboard`
 
 The forms currently simulate navigation only. They do not create real accounts or process payments.
+
+### Password reset
+
+`Log in → Forgot password? → Reset password → back to Log in`
+
+The reset flow is also front-end only. `forgot-password.html` validates the email,
+shows a confirmation, and passes the address to `reset-password.html` through
+`sessionStorage`. `reset-password.html` records a one-time flag that `login.html`
+reads to show a "Password updated" notice, then clears it. No email is actually
+sent and no password is actually changed.
 
 ## Why there are separate HTML pages
 
