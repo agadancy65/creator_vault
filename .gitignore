@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# secrets, never commit these
+.env
+.env.*
+!.env.example
+
+# logs and OS junk
+*.log
+.DS_Store
+Thumbs.db
+
+# build and runtime output (for the server later)
+dist/
+build/
+uploads/
