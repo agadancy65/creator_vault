@@ -67,68 +67,75 @@
         </p>
       </section>
 
-      <div class="index-layout">
-        <div class="index-main">
-          <section class="card search-card" aria-labelledby="search-title">
-            <h2 id="search-title">Search a handle</h2>
-            <form id="search-form" class="search-form" data-validate novalidate>
-              <label class="sr-only" for="handle-input">Creator handle</label>
-              <input
-                id="handle-input"
-                name="handle"
-                type="text"
-                placeholder="@creator_handle"
-                autocomplete="off"
-                data-rules="required handle"
-              />
-              <span
-                class="field-error"
-                id="handle-input-error"
-                role="alert"
-              ></span>
-              <button class="button button-primary" type="submit">
-                Verify handle
-              </button>
-            </form>
-            <p class="helper-text">
-              Try
-              <button
-                class="inline-demo"
-                type="button"
-                data-demo-handle="@tobi_official"
-              >
-                @tobi_official
-              </button>
-              or
-              <button
-                class="inline-demo"
-                type="button"
-                data-demo-handle="@Tobi_0fficial_Mgmt"
-              >
-                @Tobi_0fficial_Mgmt
-              </button>
-            </p>
-          </section>
+      <div class="index-main">
+        <section class="card search-card" aria-labelledby="search-title">
+          <h2 id="search-title">Search a handle</h2>
+          <form id="search-form" class="search-form" data-validate novalidate>
+            <label class="sr-only" for="handle-input">Creator handle</label>
+            <input
+              id="handle-input"
+              name="handle"
+              type="text"
+              placeholder="@creator_handle"
+              autocomplete="off"
+              data-rules="required handle"
+            />
+            <span
+              class="field-error"
+              id="handle-input-error"
+              role="alert"
+            ></span>
+            <button class="button button-primary" type="submit">
+              Verify handle
+            </button>
+          </form>
+          <p class="helper-text">
+            Try
+            <button
+              class="inline-demo"
+              type="button"
+              data-demo-handle="@tobi_official"
+            >
+              @tobi_official
+            </button>
+            or
+            <button
+              class="inline-demo"
+              type="button"
+              data-demo-handle="@Tobi_0fficial_Mgmt"
+            >
+              @Tobi_0fficial_Mgmt
+            </button>
+          </p>
+        </section>
 
-          <section class="card stat-card">
-            <div>
-              <span class="stat-number">24</span>
-              <span class="stat-label">accounts flagged today</span>
-            </div>
-            <span class="status-dot"></span>
-          </section>
-        </div>
+        <section class="card stat-card">
+          <div>
+            <span class="stat-number">24</span>
+            <span class="stat-label">accounts flagged today</span>
+          </div>
+          <span class="status-dot"></span>
+        </section>
+      </div>
 
-        <div class="index-aside">
-          <a class="card creator-cta" href="pages/signup.html">
-            <div>
-              <span class="eyebrow">CREATORS</span>
-              <h2>Are you a creator?</h2>
-              <p>Get your handles verified and build trust.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-        </div>
+      <div class="cta-row">
+        <a class="card creator-cta" href="pages/signup.html">
+          <div>
+            <span class="eyebrow">CREATORS</span>
+            <h2>Are you a creator?</h2>
+            <p>Get your handles verified and build trust.</p>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+
+        <a class="card creator-cta" href="pages/signup-org.html">
+          <div>
+            <span class="eyebrow">BRANDS &amp; ORGANIZATIONS</span>
+            <h2>Are you a brand?</h2>
+            <p>Verify your official accounts and protect your name.</p>
+          </div>
+          <span class="arrow">→</span>
+        </a>
       </div>
     </main>
 

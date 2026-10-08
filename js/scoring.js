@@ -18,14 +18,54 @@ function levenshtein(a, b) {
 
 // mockCreators: replace with a real backend fetch once Supabase is wired up.
 // Each creator has one verified handle + fake metadata for the demo.
+//
+// "photo" is the path to the creator's profile photo. It is resolved
+// relative to the pages/ directory, since that is where results are
+// rendered. A creator without a photo simply omits it, and the result
+// card falls back to the generic icon.
 const mockCreators = [
   {
     name: "Tobi",
     handle: "@tobi_official",
     accountAgeDays: 900,
     photoHash: "same-photo-hash-1",
+    photo: "../assets/images/avatar-tobi.svg",
+    claimed: true,
+    reviewed: true,
   },
 ];
+
+// Turns an account age in days into a short human phrase, for the
+// "how long has this account been active" reason.
+function accountAgePhrase(days) {
+  if (typeof days !== "number" || !isFinite(days) || days < 1) {
+    return "a short time";
+  }
+  if (days < 60) {
+    return `${days} day${days === 1 ? "" : "s"}`;
+  }
+  if (days < 730) {
+    const months = Math.round(days / 30.44);
+    return `${months} month${months === 1 ? "" : "s"}`;
+  }
+  return `over ${Math.floor(days / 365.25)} years`;
+}
+
+// Why an exact match counts as verified. These are the reasons
+// shown on the verified result card.
+function verifiedReasons(creator) {
+  const reasons = [];
+  if (creator.claimed !== false) {
+    reasons.push(`Officially claimed by ${creator.name}`);
+  }
+  if (creator.reviewed !== false) {
+    reasons.push("Identity reviewed by CreatorVault");
+  }
+  reasons.push(
+    `Account active for ${accountAgePhrase(creator.accountAgeDays)}`,
+  );
+  return reasons;
+}
 
 // Simulates "how old is the searched account" and "does its photo match" —
 // in a real build this comes from platform APIs or seeded demo data.
@@ -50,7 +90,13 @@ function scoreHandle(searchedHandle) {
     (c) => c.handle.toLowerCase() === clean.toLowerCase(),
   );
   if (exact) {
-    return { status: "verified", handle: clean, reasons: [] };
+    return {
+      status: "verified",
+      handle: clean,
+      name: exact.name,
+      photo: exact.photo || null,
+      reasons: verifiedReasons(exact),
+    };
   }
 
   // Find closest verified handle

@@ -2,6 +2,12 @@
   box-sizing: border-box;
 }
 
+/* Several components are toggled with the hidden attribute, so an
+   author display value must never be able to override it. */
+[hidden] {
+  display: none !important;
+}
+
 :root {
   --bg: #0a1413;
   --card: #121f1d;
@@ -73,11 +79,16 @@ html[data-theme="light"] {
 html[data-theme="light"] body {
   background: #eef3f1;
 }
-html[data-theme="light"] input {
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
   background: #ffffff;
 }
 html[data-theme="light"] .warning-box ul {
   color: #8a3a3a;
+}
+html[data-theme="light"] .reason-box-positive ul {
+  color: #1d6b52;
 }
 
 /* The app is dark by default regardless of system preference; the toggle
@@ -106,7 +117,9 @@ a {
   text-decoration: none;
 }
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -265,7 +278,9 @@ canvas {
   display: grid;
   gap: 10px;
 }
-input {
+input,
+select,
+textarea {
   width: 100%;
   min-width: 0;
   border: 1px solid var(--border);
@@ -275,9 +290,15 @@ input {
   color: var(--text);
   background: #0b1816;
 }
-input:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(20, 179, 148, 0.12);
+}
+textarea {
+  /* Vertical only, so a long report can never widen the card. */
+  resize: vertical;
 }
 
 .button {
@@ -422,6 +443,42 @@ p,
   background: #1a2221;
   color: var(--muted);
 }
+
+/* Verified result: the creator's own photo, small and
+   circular, with a check badge overlapping its corner.
+   The margins match .result-icon so the card's rhythm is
+   identical whichever one shows. */
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 28px;
+}
+.avatar {
+  display: block;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--card-2);
+}
+.avatar-badge {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--card);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #06110f;
+  font-size: 0.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
 .positive {
   color: var(--accent);
 }
@@ -464,6 +521,40 @@ p,
   color: #d6a6a6;
   font-size: 0.8rem;
   overflow-wrap: anywhere;
+}
+
+/* Positive reasons box. Deliberately mirrors .warning-box, so a
+   verified result explains itself the same way a flagged one
+   does, just in the "good" colour instead of the warning one. */
+.reason-box {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--green-bg);
+}
+.reason-box h2 {
+  font-size: 0.9rem;
+}
+.reason-box ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.reason-box-positive ul {
+  color: #a8d8c8;
+}
+
+/* --- Report flow on flagged results --- */
+
+.report-panel,
+.report-success {
+  margin-top: 14px;
+  padding: 22px;
+}
+.optional {
+  color: var(--muted);
+  font-weight: 400;
 }
 
 /* Self-adapting rows: collapse to one column when the track is too narrow,
@@ -716,7 +807,6 @@ p,
 
 /* Desktop / tablet composition. The widened shell needs real internal
    layout, otherwise it is just a wide single column of short cards. */
-.index-layout,
 .dashboard-layout {
   display: grid;
   gap: 0;
@@ -733,22 +823,31 @@ p,
 .dashboard-side .handle-list-card {
   margin-top: 0;
 }
+/* The homepage search and its stats sit side by side from tablet up. */
+.index-main {
+  display: grid;
+  gap: 12px;
+}
+.index-main .stat-card {
+  margin-top: 0;
+}
+/* The two signup paths, offered side by side. */
+.cta-row {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+.cta-row .creator-cta {
+  margin-top: 0;
+}
+@media (min-width: 700px) {
+  .cta-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 @media (min-width: 1024px) {
-  .index-layout {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 0 20px;
-    align-items: start;
-  }
   .index-main {
-    display: grid;
-    gap: 12px;
-  }
-  .index-main .stat-card {
-    margin-top: 0;
-  }
-  .index-aside .creator-cta {
-    margin-top: 0;
-    height: 100%;
+    grid-template-columns: 1.1fr 0.9fr;
   }
 
   .dashboard-layout {
