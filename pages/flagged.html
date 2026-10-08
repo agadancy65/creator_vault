@@ -77,15 +77,88 @@
             </ul>
           </div>
         </section>
-        <div class="button-row">
-          <a class="button button-danger" href="#">Report</a>
-          <a class="button button-secondary" href="../index.html"
-            >Search again</a
-          >
+        <div class="button-row" id="report-actions">
+          <button class="button button-danger" id="report-toggle" type="button">
+            Report
+          </button>
+          <a class="button button-secondary" href="../index.html">
+            Search again
+          </a>
+        </div>
+
+        <div class="card report-panel" id="report-panel" hidden>
+          <h2>Report this handle</h2>
+          <p class="section-copy">
+            Reports go to the CreatorVault safety team. Tell us why this handle
+            looks wrong — the more specific, the faster we can act.
+          </p>
+          <form id="report-form" class="stack-form" data-validate novalidate>
+            <div class="form-error-summary" role="alert" tabindex="-1"></div>
+            <label>
+              Why are you reporting this handle?
+              <select
+                id="report-reason"
+                name="reason"
+                required
+                data-rules="required"
+              >
+                <option value="">Select a reason</option>
+                <option value="impersonation">
+                  Impersonation of a verified creator
+                </option>
+                <option value="payment">Asking for payment or money</option>
+                <option value="suspicious">Suspicious behavior</option>
+                <option value="giveaway">Fake giveaway or scam</option>
+                <option value="other">Other</option>
+              </select>
+              <span
+                class="field-error"
+                id="report-reason-error"
+                role="alert"
+              ></span>
+            </label>
+            <label>
+              Details <span class="optional">(optional)</span>
+              <textarea
+                id="report-details"
+                name="details"
+                rows="4"
+                placeholder="Anything else we should know?"
+              ></textarea>
+            </label>
+            <div class="button-row">
+              <button class="button button-danger" type="submit">
+                Submit report
+              </button>
+              <button
+                class="button button-secondary"
+                id="report-cancel"
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card report-success" id="report-success" hidden>
+          <span class="result-icon">✓</span>
+          <span class="eyebrow positive">REPORT RECEIVED</span>
+          <h2>Thanks — report received</h2>
+          <p class="status-copy">
+            We've received your report for
+            <strong data-report-handle></strong>. Our safety team will review it
+            and act if the account breaks CreatorVault's rules.
+          </p>
+          <a class="button button-primary full-width" href="../index.html">
+            Search another handle
+          </a>
         </div>
       </div>
     </main>
     <script src="../js/result-render.js"></script>
+    <script src="../js/form-validation.js"></script>
+    <script src="../js/report.js"></script>
     <script src="../js/navigation.js"></script>
   </body>
 </html>
