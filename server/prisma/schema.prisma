@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  CREATOR
+  ORGANIZATION
+  ADMIN
+}
+
+enum CodePurpose {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
+model User {
+  id            String             @id @default(cuid())
+  name          String
+  email         String             @unique
+  passwordHash  String
+  role          Role               @default(USER)
+  emailVerified Boolean            @default(false)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  codes         VerificationCode[]
+}
+
+model VerificationCode {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  purpose   CodePurpose
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int         @default(0)
+  usedAt    DateTime?
+  createdAt DateTime    @default(now())
+
+  @@index([userId, purpose])
+}

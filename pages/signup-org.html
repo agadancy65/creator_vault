@@ -71,14 +71,13 @@
             data-validate
             novalidate
             data-set-account-type="org"
-            data-demo-submit="handles.html"
           >
             <div class="form-error-summary" role="alert" tabindex="-1"></div>
             <label>
               Organization name
               <input
-                id="org-name"
-                name="org-name"
+                id="name"
+                name="name"
                 type="text"
                 required
                 autocomplete="organization"
@@ -86,7 +85,7 @@
                 data-rules="required min:2"
                 data-msg-min="Enter the organization name."
               />
-              <span class="field-error" id="org-name-error" role="alert"></span>
+              <span class="field-error" id="name-error" role="alert"></span>
             </label>
             <label>
               Work email
@@ -167,6 +166,8 @@
     <script src="../js/form-validation.js"></script>
     <script src="../js/password-toggle.js"></script>
     <script src="../js/account-type.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/signup.js"></script>
     <script src="../js/navigation.js"></script>
   </body>
 </html>

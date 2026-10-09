@@ -1,9 +1,3 @@
-// Front-end-only "forgot password".
-//
-// Validates the email, then swaps the form for a confirmation
-// that echoes the address back and stashes it in sessionStorage
-// so reset-password.html can show it. There is no backend, so
-// the reset link itself is simulated by a button.
 (function () {
   var form = document.getElementById("forgot-form");
   var confirmPanel = document.getElementById("reset-confirm");
@@ -13,11 +7,10 @@
   var timeEl = document.getElementById("confirm-time");
   var resendBtn = document.getElementById("resend-link");
   var openBtn = document.getElementById("open-reset");
+  var btn = form.querySelector('button[type="submit"]');
 
   function stamp() {
     if (!timeEl) return;
-    // Seconds are included so a resend is visibly reflected
-    // even within the same minute.
     timeEl.textContent =
       "Sent " +
       new Date().toLocaleTimeString([], {
@@ -29,24 +22,37 @@
   }
 
   function showConfirmation(email) {
-    // Echo user input with textContent, never innerHTML.
     if (emailEl) emailEl.textContent = email;
     form.hidden = true;
     confirmPanel.hidden = false;
     stamp();
   }
 
-  form.addEventListener("submit", function (event) {
-    // form-validation.js stops invalid submits in the capture
-    // phase, so reaching here means the email is valid.
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
+    cvShowError(form, "");
+    btn.disabled = true;
     var email = form.elements.email.value.trim();
-    sessionStorage.setItem("cv_reset_email", email);
-    showConfirmation(email);
+    try {
+      await cvApi("forgot-password", { email: email });
+      sessionStorage.setItem("cv_reset_email", email);
+      showConfirmation(email);
+    } catch (err) {
+      cvShowError(form, err.message);
+    } finally {
+      btn.disabled = false;
+    }
   });
 
   if (resendBtn) {
-    resendBtn.addEventListener("click", stamp);
+    resendBtn.addEventListener("click", async function () {
+      try {
+        await cvApi("forgot-password", {
+          email: sessionStorage.getItem("cv_reset_email"),
+        });
+        stamp();
+      } catch (err) {}
+    });
   }
 
   if (openBtn) {

@@ -940,4 +940,6 @@ input:focus-visible {
   .button {
     padding: 0 14px;
   }
+.form-error-summary[hidden] { display: none; }
+.auth-pending .page-content { visibility: hidden; }
 }

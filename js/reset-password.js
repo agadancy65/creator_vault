@@ -1,28 +1,35 @@
-// Completes the front-end password reset.
-//
-// The email was stashed by forgot-password.html. There is no
-// backend, so this only simulates the reset: it records that a
-// reset happened and returns to the log-in screen, which shows
-// a confirmation.
 (function () {
   var email = sessionStorage.getItem("cv_reset_email");
+  if (!email) {
+    window.location.href = "forgot-password.html";
+    return;
+  }
 
   var target = document.getElementById("reset-email");
-  if (target) {
-    // Echo user input with textContent, never innerHTML.
-    target.textContent = email || "your account";
-  }
+  if (target) target.textContent = email;
 
   var form = document.getElementById("reset-form");
   if (!form) return;
+  var btn = form.querySelector('button[type="submit"]');
 
-  form.addEventListener("submit", function (event) {
-    // form-validation.js stops invalid submits in the capture
-    // phase, so reaching here means both passwords are valid
-    // and match.
+  form.addEventListener("submit", async function (event) {
+    // form-validation.js already blocked invalid submits
     event.preventDefault();
-    sessionStorage.setItem("cv_reset_done", email || "");
-    sessionStorage.removeItem("cv_reset_email");
-    window.location.href = "login.html";
+    cvShowError(form, "");
+    btn.disabled = true;
+    try {
+      await cvApi("reset-password", {
+        email: email,
+        code: form.elements["code"].value.trim(),
+        newPassword: form.elements["password"].value,
+      });
+      sessionStorage.setItem("cv_reset_done", email);
+      sessionStorage.removeItem("cv_reset_email");
+      window.location.href = "login.html";
+    } catch (err) {
+      cvShowError(form, err.message);
+    } finally {
+      btn.disabled = false;
+    }
   });
 })();
