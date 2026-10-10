@@ -1,11 +1,11 @@
-# CreatorVault
+# Provenly
 
 CreatorVault is a frontend prototype for checking creator handles before making payments to online vendors.
 
 ## Project structure
 
 ```text
-creatorvault/
+Creatorvault/
 ├── index.html
 ├── 404.html
 ├── pages/
