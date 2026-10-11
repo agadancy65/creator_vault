@@ -76,9 +76,9 @@
       );
     });
 
-  window.CreatorVault = window.CreatorVault || {};
-  window.CreatorVault.getAccountType = getType;
-  window.CreatorVault.setAccountType = setType;
+  window.Provenly = window.Provenly || {};
+  window.Provenly.getAccountType = getType;
+  window.Provenly.setAccountType = setType;
 
   apply();
 })();

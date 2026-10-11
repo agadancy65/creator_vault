@@ -1,8 +1,8 @@
 {
-  "name": "creatorvault",
+  "name": "provenly",
   "version": "0.1.0",
   "private": true,
-  "description": "CreatorVault frontend prototype.",
+  "description": "Provenly frontend prototype.",
   "scripts": {
     "format": "prettier --write ."
   },
