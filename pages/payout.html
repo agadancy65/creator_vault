@@ -142,5 +142,19 @@
     <script src="../js/form-validation.js"></script>
     <script src="../js/account-type.js"></script>
     <script src="../js/navigation.js"></script>
+    <script>
+      // Mark creator as signed in when they complete onboarding
+      (function () {
+        var form = document.querySelector('form[data-demo-submit="dashboard.html"]');
+        if (!form) return;
+        var type = document.documentElement.getAttribute("data-account-type");
+        // Only set for creator type, not org
+        if (type === "creator") {
+          form.addEventListener("submit", function () {
+            localStorage.setItem("provenly_creator_signed_in", "true");
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

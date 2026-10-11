@@ -118,7 +118,7 @@
         </section>
       </div>
 
-      <div class="cta-row">
+<div class="cta-row" id="cta-row">
         <a class="card creator-cta" href="pages/signup.html">
           <div>
             <span class="eyebrow">CREATORS</span>
@@ -130,7 +130,27 @@
 
         <a class="card creator-cta" href="pages/signup-org.html">
           <div>
-            <span class="eyebrow">BRANDS &amp; ORGANIZATIONS</span>
+            <span class="eyebrow">BRANDS & ORGANIZATIONS</span>
+            <h2>Are you a brand?</h2>
+            <p>Verify your official accounts and protect your name.</p>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="cta-row" id="welcome-back" hidden>
+        <a class="card creator-cta" href="pages/dashboard.html">
+          <div>
+            <span class="eyebrow">WELCOME BACK</span>
+            <h2>Welcome back</h2>
+            <p>Go to your dashboard to manage your verified handles.</p>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+
+        <a class="card creator-cta" href="pages/signup-org.html">
+          <div>
+            <span class="eyebrow">BRANDS & ORGANIZATIONS</span>
             <h2>Are you a brand?</h2>
             <p>Verify your official accounts and protect your name.</p>
           </div>
@@ -142,5 +162,17 @@
     <script src="js/scoring.js"></script>
     <script src="js/form-validation.js"></script>
     <script src="js/search.js"></script>
+    <script>
+      // Check if user completed creator onboarding
+      (function () {
+        var signedIn = localStorage.getItem("provenly_creator_signed_in");
+        var ctaRow = document.getElementById("cta-row");
+        var welcomeBack = document.getElementById("welcome-back");
+        if (signedIn === "true") {
+          if (ctaRow) ctaRow.hidden = true;
+          if (welcomeBack) welcomeBack.hidden = false;
+        }
+      })();
+    </script>
   </body>
 </html>

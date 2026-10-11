@@ -59,7 +59,7 @@ function verifiedReasons(creator) {
     reasons.push(`Officially claimed by ${creator.name}`);
   }
   if (creator.reviewed !== false) {
-    reasons.push("Identity reviewed by CreatorVault");
+    reasons.push("Identity reviewed by Provenly");
   }
   reasons.push(
     `Account active for ${accountAgePhrase(creator.accountAgeDays)}`,
