@@ -9,10 +9,10 @@
     <meta name="color-scheme" content="dark light" />
     <meta
       name="description"
-      content="CreatorVault — creator verification and account management."
+      content="Provenly — creator verification and account management."
     />
     <meta name="theme-color" content="#0a1413" />
-    <title>Creator dashboard — CreatorVault</title>
+    <title>Creator dashboard — Provenly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,6 +36,7 @@
     <script src="../js/theme.js"></script>
   </head>
   <body class="auth-pending">
+    <main class="page-shell">
       <header class="topbar">
         <a class="brand" href="../index.html"
           ><img
@@ -43,7 +44,7 @@
             alt=""
             width="24"
             height="24"
-          />CreatorVault</a
+          />Provenly</a
         >
         <div class="topbar-actions">
           <button
@@ -105,34 +106,27 @@
                 </div>
                 <a class="small-link" href="handles.html">Edit</a>
               </div>
-              <div class="handle-row">
-                <span>@tobi_official</span
-                ><span class="badge badge-green">Verified</span>
-              </div>
-              <div id="handle-rows">
-                <span>@tobi_music</span
-                ><span class="badge badge-green">Verified</span>
-              </div>
-              <div class="handle-row">
-                <span>@tobi_official_tv</span
-                ><span class="badge badge-green">Verified</span>
-              </div>
+              <div id="handle-rows"></div>
             </section>
 
             <section class="card handle-list-card" id="report-card" hidden>
               <div class="card-heading">
-              <div>
-              <span class="eyebrow">PROTECTION</span>
-              <h2>Someone copying you?</h2>
-              </div>
+                <div>
+                  <span class="eyebrow">PROTECTION</span>
+                  <h2>Someone copying you?</h2>
+                </div>
               </div>
               <p class="helper-text">
-              Report a fake account that uses your name or photo. An admin reviews it, and confirmed fakes get flagged.
+                Report a fake account that uses your name or photo. An admin
+                reviews it, and confirmed fakes get flagged.
               </p>
-              <a class="button button-secondary full-width" href="handles.html#report-section">
-              Report an impersonator
+              <a
+                class="button button-secondary full-width"
+                href="handles.html#report-section"
+              >
+                Report an impersonator
               </a>
-              </section>
+            </section>
 
             <a class="button button-secondary full-width" href="../index.html"
               >Back to search</a
@@ -140,6 +134,7 @@
           </div>
         </div>
       </div>
+    </main>
     <script src="../js/account-type.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/loading.js"></script>

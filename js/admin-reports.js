@@ -124,7 +124,7 @@
     var warning = "";
     if (rh) {
       var box = el("div", "warning-box");
-      box.appendChild(el("h2", "", "This profile is registered in CreatorVault"));
+      box.appendChild(el("h2", "", "This profile is registered in Provenly"));
       var ul = el("ul");
       ul.appendChild(
         el(
@@ -138,7 +138,7 @@
       if (rh.status === "VERIFIED") warning = "This will REVOKE the verification of @" + rh.handle + ". Continue?";
       else if (rh.status === "PENDING_REVIEW" || rh.status === "PENDING_PROOF") warning = "This will REJECT the claim for @" + rh.handle + ". Continue?";
     } else {
-      card.appendChild(el("p", "handle-note", "Not registered in CreatorVault. Confirming will record it as a known impersonator."));
+      card.appendChild(el("p", "handle-note", "Not registered in Provenly. Confirming will record it as a known impersonator."));
     }
 
     var msg = el("p", "handle-msg");

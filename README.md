@@ -1,11 +1,11 @@
-# CreatorVault
+# Provenly
 
-CreatorVault is a frontend prototype for checking creator handles before making payments to online vendors.
+Provenly is a frontend prototype for checking creator handles before making payments to online vendors.
 
 ## Project structure
 
 ```text
-creatorvault/
+Provenly/
 ├── index.html
 ├── 404.html
 ├── pages/
@@ -91,7 +91,7 @@ When the project grows, repeated UI such as the header/footer can be moved into 
 
 ## Current limitations
 
-This is still a frontend prototype. A production CreatorVault would need:
+This is still a frontend prototype. A production Provenly would need:
 
 - Real authentication and authorization
 - A database
@@ -123,11 +123,11 @@ Typical first setup:
 ```bash
 git init
 git add .
-git commit -m "Initial CreatorVault frontend"
+git commit -m "Initial Provenly frontend"
 ```
 
 Then create a GitHub repository and add it as the remote.
 
 ## Figma handoff
 
-The UI was built from the supplied CreatorVault dark-screen design. For exact production handoff, compare spacing, typography, colors, icons, and assets against the Figma file in Dev Mode before finalizing.
+The UI was built from the supplied Provenly dark-screen design. For exact production handoff, compare spacing, typography, colors, icons, and assets against the Figma file in Dev Mode before finalizing.

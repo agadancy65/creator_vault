@@ -87,7 +87,7 @@ router.post('/handles/:id/check', checkLimiter, asyncHandler(async (req, res) =>
   let found = false;
   try {
     const response = await fetch(handle.profileUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; CreatorVaultBot/1.0)', 'Accept-Language': 'en' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ProvenlyBot/1.0)', 'Accept-Language': 'en' },
       redirect: 'follow',
       signal: AbortSignal.timeout(8000),
     });
