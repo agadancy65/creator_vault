@@ -5,6 +5,11 @@ const cookieParser = require('cookie-parser');
 
 const config = require('./config');
 const authRoutes = require('./routes/auth');
+const creatorRoutes = require('./routes/creator');
+const adminRoutes = require('./routes/admin');
+const reportRoutes = require('./routes/reports');
+const adminReportRoutes = require('./routes/adminReports');
+const payoutRoutes = require('./routes/payout');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -15,6 +20,11 @@ app.use(cookieParser());
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRoutes);
+app.use('/api/creator', creatorRoutes);
+app.use('/api/payout', payoutRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/admin/reports', adminReportRoutes);
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));
 
 // serve the existing frontend from the repo root, but never expose backend code or secrets

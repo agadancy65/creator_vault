@@ -10,7 +10,7 @@
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     cvShowError(form, "");
-    btn.disabled = true;
+    cvLoading(btn, true);
     try {
       await cvApi("verify-email", {
         email: email,
@@ -21,7 +21,7 @@
     } catch (err) {
       cvShowError(form, err.message);
     } finally {
-      btn.disabled = false;
+      cvLoading(btn, false);
     }
   });
 

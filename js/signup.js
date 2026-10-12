@@ -6,7 +6,7 @@
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
     cvShowError(form, "");
-    btn.disabled = true;
+    cvLoading(btn, true);
 
     var type = form.getAttribute("data-set-account-type");
     var role = type === "org" ? "organization" : "creator";
@@ -23,7 +23,7 @@
     } catch (err) {
       cvShowError(form, err.message);
     } finally {
-      btn.disabled = false;
+      cvLoading(btn, false);
     }
   });
 })();

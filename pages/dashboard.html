@@ -77,11 +77,11 @@
             <section class="dashboard-grid">
               <div class="card metric-card">
                 <span class="metric-label">Verification status</span>
-                <strong class="metric-value positive">Verified</strong>
+                <strong class="metric-value" id="stat-status">…</strong>
               </div>
               <div class="card metric-card">
                 <span class="metric-label">Linked handles</span>
-                <strong class="metric-value">3</strong>
+                <strong class="metric-value" id="stat-handles">…</strong>
               </div>
               <div class="card metric-card">
                 <span class="metric-label">Profile checks</span>
@@ -109,7 +109,7 @@
                 <span>@tobi_official</span
                 ><span class="badge badge-green">Verified</span>
               </div>
-              <div class="handle-row">
+              <div id="handle-rows">
                 <span>@tobi_music</span
                 ><span class="badge badge-green">Verified</span>
               </div>
@@ -119,17 +119,33 @@
               </div>
             </section>
 
+            <section class="card handle-list-card" id="report-card" hidden>
+              <div class="card-heading">
+              <div>
+              <span class="eyebrow">PROTECTION</span>
+              <h2>Someone copying you?</h2>
+              </div>
+              </div>
+              <p class="helper-text">
+              Report a fake account that uses your name or photo. An admin reviews it, and confirmed fakes get flagged.
+              </p>
+              <a class="button button-secondary full-width" href="handles.html#report-section">
+              Report an impersonator
+              </a>
+              </section>
+
             <a class="button button-secondary full-width" href="../index.html"
               >Back to search</a
             >
           </div>
         </div>
       </div>
-    </main>
-    <script src="../js/account-type.js"></script>
     <script src="../js/account-type.js"></script>
     <script src="../js/api.js"></script>
+    <script src="../js/loading.js"></script>
     <script src="../js/dashboard.js"></script>
+    <script src="../js/dashboard-handles.js"></script>
     <script src="../js/navigation.js"></script>
+    <script src="../js/admin-link.js"></script>
   </body>
 </html>

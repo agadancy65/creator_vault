@@ -2,35 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark light" />
-    <meta
-      name="description"
-      content="CreatorVault — creator verification and account management."
-    />
+    <meta name="description" content="CreatorVault — creator verification and account management." />
     <meta name="theme-color" content="#0a1413" />
     <title>Payout account — CreatorVault</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="../assets/icons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="../assets/icons/favicon-16x16.png"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png" />
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/theme.js"></script>
@@ -39,23 +20,11 @@
     <main class="page-shell">
       <header class="topbar">
         <a class="brand" href="../index.html"
-          ><img
-            src="../assets/icons/logo.png"
-            alt=""
-            width="24"
-            height="24"
-          />CreatorVault</a
+          ><img src="../assets/icons/logo.png" alt="" width="24" height="24" />CreatorVault</a
         >
         <div class="topbar-actions">
-          <button
-            class="theme-toggle"
-            id="theme-toggle"
-            type="button"
-            aria-label="Switch to light theme"
-          >
-            🌙
-          </button>
-          <a class="text-link" href="login.html">Log in</a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">🌙</button>
+          <a class="text-link" href="dashboard.html">Dashboard</a>
         </div>
       </header>
       <div class="page-content">
@@ -64,83 +33,79 @@
           <h1>Add payout details</h1>
           <p
             class="section-copy"
-            data-creator-text="Connect a payout account for future CreatorVault creator features."
+            data-creator-text="Link the bank account brands will pay. It must be in your own name, and it upgrades your verified handles to Level 2."
             data-org-text="Connect a payout account for your organization's future CreatorVault features."
           >
-            Connect a payout account for future CreatorVault creator features.
+            Link the bank account brands will pay. It must be in your own name, and it upgrades your verified handles to Level 2.
           </p>
-          <form
-            class="stack-form"
-            data-validate
-            novalidate
-            data-demo-submit="dashboard.html"
-          >
-            <div class="form-error-summary" role="alert" tabindex="-1"></div>
-            <label>
-              Account name
-              <input
-                id="account-name"
-                name="account-name"
-                type="text"
-                required
-                autocomplete="name"
-                placeholder="Full name"
-                data-rules="required min:2"
-                data-msg-min="Enter the name on the account."
-              />
-              <span
-                class="field-error"
-                id="account-name-error"
-                role="alert"
-              ></span>
-            </label>
-            <label>
-              Bank name
-              <input
-                id="bank-name"
-                name="bank-name"
-                type="text"
-                required
-                autocomplete="organization"
-                placeholder="Bank"
-                data-rules="required"
-              />
-              <span
-                class="field-error"
-                id="bank-name-error"
-                role="alert"
-              ></span>
-            </label>
-            <label>
-              Account number
-              <input
-                id="account-number"
-                name="account-number"
-                type="text"
-                inputmode="numeric"
-                required
-                autocomplete="off"
-                placeholder="Enter 10-digit account number"
-                data-rules="required digits min:10 max:10"
-                data-msg-digits="Account numbers contain digits only."
-                data-msg-min="Enter the full 10-digit account number."
-                data-msg-max="Account numbers are 10 digits."
-              />
-              <span
-                class="field-error"
-                id="account-number-error"
-                role="alert"
-              ></span>
-            </label>
-            <button class="button button-primary" type="submit">
-              Save payout account
-            </button>
-          </form>
+
+          <div class="card reset-confirm" id="org-note" hidden>
+            <h2>Not needed for organizations</h2>
+            <p class="section-copy">Organizations pay creators and don't need a payout account.</p>
+            <div class="button-row">
+              <a class="button button-primary" href="dashboard.html">Go to dashboard</a>
+            </div>
+          </div>
+
+          <div id="payout-area">
+            <p class="helper-text">
+              The account must be in the name you registered with:
+              <strong id="registered-name"></strong>
+            </p>
+
+            <form class="stack-form" id="payout-form" novalidate>
+              <label>
+                Bank
+                <select id="bank">
+                  <option value="ECOBANK">Ecobank Nigeria</option>
+                </select>
+              </label>
+              <label>
+                Account number
+                <input
+                  id="account-number"
+                  name="account-number"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="10"
+                  autocomplete="off"
+                  placeholder="Enter 10-digit account number"
+                />
+                <span class="field-error" id="account-error" role="alert"></span>
+              </label>
+              <button class="button button-primary" type="submit" id="payout-btn">
+                Verify and save account
+              </button>
+              <p class="helper-text" id="mock-note" hidden>
+                Demo mode: bank lookups are simulated until the live Ecobank connection is added.
+              </p>
+            </form>
+
+            <div class="card reset-confirm" id="payout-linked" hidden>
+              <span class="eyebrow positive">ACCOUNT VERIFIED</span>
+              <h2>Payout account linked</h2>
+              <div class="detail-list">
+                <div><span>Bank</span><strong id="linked-bank"></strong></div>
+                <div><span>Account number</span><strong id="linked-number"></strong></div>
+                <div><span>Account name</span><strong id="linked-name"></strong></div>
+                <div><span>Verification</span><strong class="positive">Level 2: identity confirmed</strong></div>
+              </div>
+              <p class="handle-msg" id="remove-msg"></p>
+              <div class="button-row">
+                <button class="button button-secondary" id="remove-btn" type="button">Remove account</button>
+                <a class="button button-primary" href="dashboard.html">Continue to dashboard</a>
+              </div>
+            </div>
+
+            <a class="button button-secondary full-width continue-link" href="dashboard.html" id="skip-link">
+              Skip for now
+            </a>
+          </div>
         </section>
       </div>
     </main>
-    <script src="../js/form-validation.js"></script>
     <script src="../js/account-type.js"></script>
     <script src="../js/navigation.js"></script>
+    <script src="../js/payout.js"></script>
   </body>
 </html>

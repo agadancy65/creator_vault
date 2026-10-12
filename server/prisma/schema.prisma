@@ -29,6 +29,9 @@ model User {
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   codes         VerificationCode[]
+  handles       Handle[]
+  reports       Report[]
+  payout        PayoutAccount?
 }
 
 model VerificationCode {
@@ -43,4 +46,118 @@ model VerificationCode {
   createdAt DateTime    @default(now())
 
   @@index([userId, purpose])
+}
+
+enum Platform {
+  INSTAGRAM
+  TIKTOK
+  X
+  YOUTUBE
+  FACEBOOK
+}
+
+enum HandleStatus {
+  PENDING_PROOF
+  PENDING_REVIEW
+  VERIFIED
+  REJECTED
+  REVOKED
+}
+
+enum ProofMethod {
+  AUTO
+  MANUAL
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED
+}
+
+model Handle {
+  id               String       @id @default(cuid())
+  userId           String
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform         Platform
+  handle           String
+  normalized       String
+  profileUrl       String
+  status           HandleStatus @default(PENDING_PROOF)
+  level            Int          @default(1)
+  proofCode        String
+  proofMethod      ProofMethod?
+  reviewReason     String?
+  reviewNote       String?
+  reviewedById     String?
+  reviewedAt       DateTime?
+  verifiedAt       DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  newDisputes      Dispute[]    @relation("NewHandle")
+  existingDisputes Dispute[]    @relation("ExistingHandle")
+  realReports      Report[]     @relation("ReportRealHandle")
+  reportedIn       Report[]     @relation("ReportReportedHandle")
+
+  @@index([platform, normalized])
+  @@index([userId])
+  @@index([status])
+}
+
+model Dispute {
+  id               String        @id @default(cuid())
+  newHandleId      String
+  newHandle        Handle        @relation("NewHandle", fields: [newHandleId], references: [id], onDelete: Cascade)
+  existingHandleId String
+  existingHandle   Handle        @relation("ExistingHandle", fields: [existingHandleId], references: [id], onDelete: Cascade)
+  similarity       Float
+  reason           String
+  status           DisputeStatus @default(OPEN)
+  resolution       String?
+  resolvedById     String?
+  resolvedAt       DateTime?
+  createdAt        DateTime      @default(now())
+
+  @@unique([newHandleId, existingHandleId])
+  @@index([status])
+}
+
+enum ReportStatus {
+  OPEN
+  CONFIRMED
+  DISMISSED
+}
+
+model Report {
+  id               String       @id @default(cuid())
+  reporterId       String
+  reporter         User         @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  realHandleId     String
+  realHandle       Handle       @relation("ReportRealHandle", fields: [realHandleId], references: [id], onDelete: Cascade)
+  reportedHandleId String?
+  reportedHandle   Handle?      @relation("ReportReportedHandle", fields: [reportedHandleId], references: [id], onDelete: SetNull)
+  platform         Platform
+  handle           String
+  normalized       String
+  profileUrl       String
+  details          String
+  status           ReportStatus @default(OPEN)
+  resolution       String?
+  resolvedById     String?
+  resolvedAt       DateTime?
+  createdAt        DateTime     @default(now())
+
+  @@index([status])
+  @@index([platform, normalized])
+}
+
+model PayoutAccount {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bank          String
+  accountNumber String
+  accountName   String
+  verifiedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

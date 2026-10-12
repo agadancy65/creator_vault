@@ -2,35 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark light" />
-    <meta
-      name="description"
-      content="CreatorVault — creator verification and account management."
-    />
+    <meta name="description" content="CreatorVault — creator verification and account management." />
     <meta name="theme-color" content="#0a1413" />
     <title>Link handles — CreatorVault</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="../assets/icons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="../assets/icons/favicon-16x16.png"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png" />
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/theme.js"></script>
@@ -39,23 +20,11 @@
     <main class="page-shell">
       <header class="topbar">
         <a class="brand" href="../index.html"
-          ><img
-            src="../assets/icons/logo.png"
-            alt=""
-            width="24"
-            height="24"
-          />CreatorVault</a
+          ><img src="../assets/icons/logo.png" alt="" width="24" height="24" />CreatorVault</a
         >
         <div class="topbar-actions">
-          <button
-            class="theme-toggle"
-            id="theme-toggle"
-            type="button"
-            aria-label="Switch to light theme"
-          >
-            🌙
-          </button>
-          <a class="text-link" href="login.html">Log in</a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">🌙</button>
+          <a class="text-link" href="dashboard.html">Dashboard</a>
         </div>
       </header>
       <div class="page-content">
@@ -69,67 +38,82 @@
           </h1>
           <p
             class="section-copy"
-            data-creator-text="Add the social handles you want CreatorVault to verify."
+            data-creator-text="Paste the link to each social profile you own. We'll ask you to prove it's yours."
             data-org-text="Add the brand's social handles you want CreatorVault to verify."
           >
-            Add the social handles you want CreatorVault to verify.
+            Paste the link to each social profile you own. We'll ask you to prove it's yours.
           </p>
-          <form
-            class="stack-form"
-            data-validate
-            novalidate
-            data-demo-submit="payout.html"
-          >
-            <div class="form-error-summary" role="alert" tabindex="-1"></div>
+
+          <div class="card reset-confirm" id="org-note" hidden>
+            <h2>Brand verification comes later</h2>
+            <p class="section-copy">
+              Organization verification isn't available yet. You can continue to the next step.
+            </p>
+          </div>
+
+          <div id="creator-area">
+            <form class="stack-form" id="add-handle-form" novalidate>
+              <label>
+                Profile link
+                <input
+                  id="profile-url"
+                  name="profileUrl"
+                  type="text"
+                  inputmode="url"
+                  autocomplete="off"
+                  placeholder="https://www.instagram.com/yourhandle"
+                />
+                <span class="field-error" id="add-error" role="alert"></span>
+              </label>
+              <button class="button button-primary" type="submit" id="add-btn">Add handle</button>
+              <p class="helper-text">
+                Supported: Instagram, TikTok, X, YouTube, Facebook. For TikTok and YouTube, use the
+                link that contains @yourname.
+              </p>
+            </form>
+
+            <div class="handle-stack" id="handles-list" aria-live="polite"></div>
+            <p class="helper-text" id="handles-empty" hidden>
+              No handles yet. Add your first one above.
+            </p>
+          </div>
+
+          <section class="card reset-confirm section-gap" id="report-section" hidden>
+            <h2>Report an impersonator</h2>
+            <p class="section-copy" id="report-intro">
+            Someone using your name or photo? Paste the fake profile's link. An admin reviews it, and
+            confirmed fakes are flagged for anyone who checks them.
+            </p>
+            <form class="stack-form" id="report-form" novalidate>
             <label>
-              Instagram
-              <input
-                id="instagram"
-                name="instagram"
-                type="text"
-                autocomplete="username"
-                placeholder="@yourhandle"
-                data-rules="handle"
-              />
-              <span
-                class="field-error"
-                id="instagram-error"
-                role="alert"
-              ></span>
+              Which of your verified handles is being copied?
+              <select id="report-real"></select>
             </label>
             <label>
-              TikTok
-              <input
-                id="tiktok"
-                name="tiktok"
-                type="text"
-                autocomplete="username"
-                placeholder="@yourhandle"
-                data-rules="handle"
-              />
-              <span class="field-error" id="tiktok-error" role="alert"></span>
+              Fake profile link
+              <input id="report-url" type="text" inputmode="url" autocomplete="off"
+              placeholder="https://www.instagram.com/fake_account" />
             </label>
             <label>
-              YouTube
-              <input
-                id="youtube"
-                name="youtube"
-                type="text"
-                autocomplete="username"
-                placeholder="@yourchannel"
-                data-rules="handle"
-              />
-              <span class="field-error" id="youtube-error" role="alert"></span>
+              What makes it fake?
+              <textarea id="report-details" rows="3" maxlength="1000"
+              placeholder="Copies my photo and bio, DMs brands asking for money..."></textarea>
             </label>
-            <button class="button button-primary" type="submit">
-              Continue
-            </button>
-          </form>
+            <span class="field-error" id="report-error" role="alert"></span>
+            <button class="button button-primary" type="submit" id="report-btn">Submit report</button>
+            </form>
+            <div class="handle-stack" id="reports-list" aria-live="polite"></div>
+          </section>
+
+          <a class="button button-secondary full-width continue-link" href="payout.html">
+            Continue to payout
+          </a>
         </section>
       </div>
     </main>
-    <script src="../js/form-validation.js"></script>
     <script src="../js/account-type.js"></script>
     <script src="../js/navigation.js"></script>
+    <script src="../js/handles.js"></script>
+    <script src="../js/reports.js"></script>
   </body>
 </html>

@@ -924,6 +924,163 @@ input:focus-visible {
   }
 }
 
+/* --- Handles & admin review --- */
+.badge-amber {
+  background: rgba(217, 164, 65, 0.15);
+  color: #d9a441;
+}
+.badge-red {
+  background: var(--red-bg);
+  color: var(--red);
+}
+.badge-muted {
+  background: var(--card-2);
+  color: var(--muted);
+}
+html[data-theme="light"] .badge-amber {
+  background: #fbf1da;
+  color: #8a6212;
+}
+
+.handle-stack {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.handle-card {
+  padding: 18px;
+}
+.handle-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.handle-card-head > * {
+  min-width: 0;
+}
+.handle-title {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.handle-title strong {
+  overflow-wrap: anywhere;
+}
+.handle-platform {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.handle-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.proof-box {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--card-2);
+}
+.proof-box p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.proof-box .proof-row + p {
+  margin: 10px 0 0;
+}
+.proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.proof-code {
+  padding: 8px 12px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius-xs);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.button-small {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.82rem;
+}
+.handle-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.handle-msg {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.handle-msg:empty {
+  display: none;
+}
+.handle-msg.is-error {
+  color: var(--red);
+  font-weight: 600;
+}
+.handle-msg.is-ok {
+  color: var(--accent);
+  font-weight: 600;
+}
+.continue-link {
+  margin-top: 20px;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.tab {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.tab[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--green-bg);
+  color: var(--accent);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.chip {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-2);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.review-controls {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 /* Very narrow viewports (zoomed-in landscape, split screen). */
 @media (max-width: 359px) {
   :root {
@@ -940,6 +1097,73 @@ input:focus-visible {
   .button {
     padding: 0 14px;
   }
-.form-error-summary[hidden] { display: none; }
-.auth-pending .page-content { visibility: hidden; }
+}
+
+/* Moved out of the narrow-viewport block above so they apply on every screen size. */
+.form-error-summary[hidden] {
+  display: none;
+}
+.auth-pending .page-content {
+  visibility: hidden;
+}
+
+/* --- Button loading state --- */
+.button {
+  --spin: var(--text);
+}
+.button-primary {
+  --spin: #06110f;
+}
+.button-danger {
+  --spin: #fff;
+}
+.button:disabled:not(.is-loading) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.button.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.button.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid var(--spin);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: cv-spin 0.7s linear infinite;
+}
+@keyframes cv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button.is-loading::after {
+    animation-duration: 1.6s;
+  }
+}
+.rtab {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.rtab[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--green-bg);
+  color: var(--accent);
+}
+.section-gap {
+  margin-top: 28px;
 }

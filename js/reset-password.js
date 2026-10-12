@@ -16,7 +16,7 @@
     // form-validation.js already blocked invalid submits
     event.preventDefault();
     cvShowError(form, "");
-    btn.disabled = true;
+    cvLoading(btn, true);
     try {
       await cvApi("reset-password", {
         email: email,
@@ -29,7 +29,7 @@
     } catch (err) {
       cvShowError(form, err.message);
     } finally {
-      btn.disabled = false;
+      cvLoading(btn, false);
     }
   });
 })();

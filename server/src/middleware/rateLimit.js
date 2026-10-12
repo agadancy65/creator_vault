@@ -12,4 +12,7 @@ const make = (max, windowMinutes) =>
 module.exports = {
   authLimiter: make(20, 15),
   codeLimiter: make(10, 15),
+  checkLimiter: make(10, 15),
+  reportLimiter: make(10, 60),
+  payoutLimiter: make(10, 15),
 };
